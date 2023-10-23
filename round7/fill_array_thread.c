@@ -47,13 +47,18 @@ int main(int argc, char *argv[]){
     }
   }
   for(int i = 0; i < THREAD_AMOUNT; i++){
-    pthread_join(threads[i], NULL);
+   status = pthread_join(threads[i], NULL);
+   if(status != 0){
+     perror("Thread joining failed: ");
+     printf("%d", errno);
+   }
   }
   if(argc < 2){
     for(int i = ARR_SIZE - 100; i < ARR_SIZE; i++){
       printf("%d\n", arr[i]);
     }
   }
+  free(arr);
   return 0;
 }
 
