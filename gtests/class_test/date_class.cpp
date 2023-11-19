@@ -98,8 +98,9 @@ void Date::nextDay(){
     if(month == 12){
       year++;
       month = 1;
+    }else{
+      month++;
     }
-    month++;
     day = day - month_days;
   }
   
