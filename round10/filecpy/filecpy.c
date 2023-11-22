@@ -2,11 +2,15 @@
 contents of one file
 to another */
 
+/*CONTAINS AN INTENDED ERROR WHEN WRITING TO FILE*/
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
 
 #define BUFFER_SIZE 4096 //Max amount of data to be copied at one time
 #define OUTPUT_MODE 0700 //Give the output file r/w/exec permissions
@@ -35,16 +39,19 @@ int main(int argc, char *argv[]){
     if(read_cnt <= 0){ //File read complete or error occurred, break the loop
       break;
     }
-
+    close(file_out);
     write_cnt = write(file_out, buffer, read_cnt);
     if(write_cnt <= 0){ //Write returns <= 0 only on error, terminate
+      printf("Error when writing to file\n");
+      printf("Error: %d\n", errno);
+      printf("%s\n", strerror(errno));
       exit(4);
     }
   }
 
   //Close files
   close(file_in);
-  close(file_out);
+  //close(file_out);
 
   if(read_cnt == 0){ //Last read succesful
     exit(0);

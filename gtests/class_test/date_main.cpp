@@ -50,6 +50,19 @@ TEST(DateClass, weekLater){
   EXPECT_EQ(1995, date.getYear());
 }
 
+TEST(DateClass, leapYear){
+  Date date;
+
+  date.setDay(28);
+  date.setMonth(2);
+  date.setYear(2024);
+
+  date.nextDay();
+  EXPECT_EQ(29, date.getDay());
+  EXPECT_EQ(2, date.getMonth());
+  EXPECT_EQ(2024, date.getYear());
+}
+
 int main(int argc, char* argv[]){
 
   /*  Date today(14, 11, 2023);
